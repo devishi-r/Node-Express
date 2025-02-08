@@ -35,4 +35,4 @@ Commit 6: Set up MongoDB Shell
 Commit 7: 
 Created mongoose object (contactModel) -> applying CRUD operations to real database
 _await_: pauses JavaScript execution until Promise is resolved
-- Implement contactModel in API methods
+- Implement contactModel in API methods (verify all with Postman)

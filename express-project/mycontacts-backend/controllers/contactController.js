@@ -30,21 +30,45 @@ const createContact = asyncHandler(async (request, response) => {
 //@route: PUT /api/contacts/:id
 //@access: public 
 const modifyContact = asyncHandler(async (request, response) => {
-    response.status(200).json({message: `Modify contact: ${request.params.id}` });
+    //first finding contact:
+    const contact = await Contact.findById(request.params.id);
+    if(!contact){
+        response.status(400);
+        throw new Error ("Contact not found");
+    }
+    //modifying contact:
+    const modifiedContact = await Contact.findByIdAndUpdate(
+        request.params.id, 
+        request.body, 
+        {new: true});
+    response.status(200).json(modifiedContact);
 });
 
 //@desc: Delete contact
 //@route: DELETE /api/contacts/:id
 //@access: public  
-const deleteContact = asyncHandler(async (request, response) => {
-    response.status(200).json({message: `Delete contact: ${request.params.id}` });
+const deleteContact = asyncHandler(async (request, response) => { 
+    //finding contact:
+    const contact = await Contact.findById(request.params.id);
+    if(!contact){
+        response.status(400);
+        throw new Error ("Contact not found");
+    }
+    await Contact.deleteOne();
+    response.status(200).json(contact);
 });
 
 //@desc: Get contact
 //@route: GET /api/contacts/:id
 //@access: public  
 const getContact = asyncHandler(async (request, response) => {
-    response.status(200).json({message: `Fetch contact: ${request.params.id}`});
+    const contact = await Contact.findById(request.params.id);
+    //if no contact found: throw error:
+    if(!contact){
+        response.status(400);
+        throw new Error ("Contact not found");
+    }
+    response.status(200).json(contact);
 });
 
 
