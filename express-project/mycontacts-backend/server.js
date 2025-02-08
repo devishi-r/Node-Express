@@ -1,6 +1,7 @@
 const express = require("express"); //require: similar to import
 const dotenv = require("dotenv").config(); //config(): creates process.env: global parameter storing envt variables
 const app = express();
+const errorHandler = require("./middleware/errorHandler");
 const port = process.env.PORT || 5000;
 
 
@@ -10,8 +11,9 @@ const port = process.env.PORT || 5000;
 //     response.status(200).json({message: "Get all contacts" });
 // });
 
-//replaced get with use- middleware
+app.use(express.json()); //to parse data stream receieved from client on server side    
 app.use('/api/contacts', require("./routes/contactRoutes"));
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

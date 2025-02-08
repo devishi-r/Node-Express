@@ -11,7 +11,13 @@ const getContacts = (request, response) => {
 //@route: POST /api/contacts
 //@access: public
 const createContact = (request, response) => {
-    response.status(200).json({message: "Create contact" });
+    console.log("The request body is: ",request.body);
+    const {name, email, phone} = request.body;
+    if(!name || !email || !phone) {
+        response.status(400);
+        throw new Error ("All fields are mandatory");
+    }
+    response.status(201).json({message: "Create contact" });
 };
 
 //@desc: Modify contact
