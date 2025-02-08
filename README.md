@@ -29,3 +29,10 @@ _Promise_: object representing result of an asynchronous operation, such as quer
 MongoDB operations are asynchronous - don't return results immediately, instead return a Promise which may be resolved (returns data) or rejected (error).
 -> Convert all database-related functions: async
 - Error Handling async functions -> try-catch block for each function: **Express Async Handler** middleware
+
+Commit 6: Set up MongoDB Shell
+
+Commit 7: 
+Created mongoose object (contactModel) -> applying CRUD operations to real database
+_await_: pauses JavaScript execution until Promise is resolved
+- Implement contactModel in API methods

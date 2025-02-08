@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
-
+const Contact = require("../models/contactModel");
 //Creating API methods, require labels associated
 
 //@desc: Get all contacts
 //@route: GET /api/contacts
 //@access: public  //will be made private when adding authentication :)
 const getContacts = asyncHandler(async (request, response) => {
-    response.status(200).json({message: "Get all contacts" });
+    const contacts = await Contact.find();
+    response.status(200).json(contacts);
 });
 
 //@desc: Create contact
@@ -19,7 +20,10 @@ const createContact = asyncHandler(async (request, response) => {
         response.status(400);
         throw new Error ("All fields are mandatory");
     }
-    response.status(201).json({message: "Create contact" });
+
+    //if all fields are present, create contact:
+    const contact = await Contact.create({name, email, phone});
+    response.status(201).json(contact);
 });
 
 //@desc: Modify contact
