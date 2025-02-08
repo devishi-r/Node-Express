@@ -1,6 +1,9 @@
 const express = require("express"); //require: similar to import
+const connectDb = require("./config/dbConnection");
 const dotenv = require("dotenv").config(); //config(): creates process.env: global parameter storing envt variables
 const app = express();
+
+connectDb();
 const errorHandler = require("./middleware/errorHandler");
 const port = process.env.PORT || 5000;
 
