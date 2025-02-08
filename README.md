@@ -17,3 +17,15 @@ Commit 3: 'Controllers'
 - Creating API logic methods -> specify labesl : description, route, access specifier
 (Access specified: public) - to be made private after implementing auth
 - Compress multiple HTTP methods per route (`contactRoutes.js`)
+
+Commit 4: POST Request Body {json} (Via Postman) And Error Handling 
+- Request body: required to be parsed using *middleware* - `app.use(express.json());`
+- Error Handling: in Controller logic
+- Ensuring error message is in json format (currently seen as HTML in Postman): `middleware` directory
+    - This is done to ensure Express doesn't return an HTML error page instead of JSON response
+
+Commit 5: Express async handler
+_Promise_: object representing result of an asynchronous operation, such as querying a database. Instead of blocking execution while waiting for a response, Promises allow JavaScript to continue running other code and handle the database response later.
+MongoDB operations are asynchronous - don't return results immediately, instead return a Promise which may be resolved (returns data) or rejected (error).
+-> Convert all database-related functions: async
+- Error Handling async functions -> try-catch block for each function: **Express Async Handler** middleware
