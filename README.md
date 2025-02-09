@@ -24,7 +24,7 @@ Commit 4: POST Request Body {json} (Via Postman) And Error Handling
 - Ensuring error message is in json format (currently seen as HTML in Postman): `middleware` directory
     - This is done to ensure Express doesn't return an HTML error page instead of JSON response
 
-Commit 5: Express async handler
+Commit 5: Express async handler   
 _Promise_: object representing result of an asynchronous operation, such as querying a database. Instead of blocking execution while waiting for a response, Promises allow JavaScript to continue running other code and handle the database response later.
 MongoDB operations are asynchronous - don't return results immediately, instead return a Promise which may be resolved (returns data) or rejected (error).
 -> Convert all database-related functions: async
@@ -32,7 +32,13 @@ MongoDB operations are asynchronous - don't return results immediately, instead 
 
 Commit 6: Set up MongoDB Shell
 
-Commit 7: 
+Commit 7:    
 Created mongoose object (contactModel) -> applying CRUD operations to real database
 _await_: pauses JavaScript execution until Promise is resolved
 - Implement contactModel in API methods (verify all with Postman)
+
+Commit 8: Authentication  
+Specify endpoints for users to register and login  and  Access token provided to manage contacts  
+- `userRoutes` and `userController` defined
+- `userModel` defined
+- Functionality to register/login/current user: logic added to `userController`
