@@ -42,3 +42,10 @@ Specify endpoints for users to register and login  and  Access token provided to
 - `userRoutes` and `userController` defined
 - `userModel` defined
 - Functionality to register/login/current user: logic added to `userController`
+
+Commit 9: JSON Web Token    
+Client passes _access token_ to ensure only authenticated users may access private routes
+- Defining login endpoint functionality in `userController`
+- Can use generated access token to access all private routes 
+- Convert `contactController` routes to private, and enforce validation logic
+- Creating middleware to validate client token (accessToken is passed in bearer sectin on Postman)

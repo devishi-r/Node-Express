@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //@desc: Register a user
 //@route: POST /api/users/register
@@ -45,15 +46,44 @@ const registerUser = asyncHandler(async (request, response) => {
 //@route: POST /api/users/login
 //@access: public
 const loginUser = asyncHandler( async(request, response) => {
-    response.json({message: "Login the user"});
+    const {email, password} = request.body;
+    if(!email || !password){
+        return response.status(400).json({
+            success: false,
+            message: "All fields are mandatory"
+        })
+    }
+    const user = await User.findOne( {email });
+    //compare password with hashed password :)
+    console.log("Comparing password and hashed password");
+    if (user && (await bcrypt.compare(password, user.password))){
+        console.log("user login succeessful, generating token");
+        //success - providing access token:
+        const accessToken = jwt.sign({
+            user: {
+                username: user.username,
+                email: user.email,
+                id: user.id
+            } //payload
+        }, 
+        process.env.ACCESS_TOKEN_SECRET, 
+        { expiresIn: "1m" }); //jwt.sign() parameters: payload, secret, expiration time of token
+        response.json( {accessToken});
+        console.log("Access token: ", accessToken);
+    }
+    else {
+        return response.status(401).json({
+            success: false,
+            message: "Invalid password"
+        });
+    }
 });
 
-
 //@desc: Display current active user information
-//@route: POST /api/users/current
+//@route: GET /api/users/current
 //@access: private 
 const currentUser = asyncHandler(async(request, response) => {
-    response.json({message: "Current user information"});
+    response.json(request.user);
 });
 
 module.exports = {registerUser, loginUser, currentUser};
