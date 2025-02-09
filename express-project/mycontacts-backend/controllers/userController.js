@@ -8,15 +8,19 @@ const bcrypt = require("bcrypt");
 const registerUser = asyncHandler(async (request, response) => {
     const {username, email, password} = request.body;
     if(!username || !email || !password){
-        response.status(400);
-        throw new Error("All fields are mandatory");
+        return response.status(400).json({
+            success: false,
+            message: "All fields are mandatory"
+        });
     }
 
     //making sure usernamer is not associated with an existing email:
     const userAvailable = await User.findOne({email});
     if(userAvailable){
-        response.status(400);
-        throw new Error("User already registered");
+        return response.status(400).json({
+            success: false,
+            message: "User already registered"
+        });
     }
 
     //if no user found, create new user:
@@ -35,8 +39,6 @@ const registerUser = asyncHandler(async (request, response) => {
         response.status(400);
         throw new Error("Invalid user data");
     }
-
-    response.json({message: "Register the user"});
 });
 
 //@desc:  Login a user
