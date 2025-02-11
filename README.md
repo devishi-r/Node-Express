@@ -55,3 +55,6 @@ Commit 10: Querying Database
 - Converting `contactController` routes to private
 - using `validateToken` as middleware for all private routes
 - Implement `request.user.id` in contactController file to assign contacts to different users
+
+Commit 11:
+- Ensuring updating and deleting contacts is only done by owner user - `contactController`

@@ -36,6 +36,13 @@ const modifyContact = asyncHandler(async (request, response) => {
         response.status(400);
         throw new Error ("Contact not found");
     }
+
+    if(contact.user_id.toString() != request.user.id){
+        //different user is trying to update another user's conact
+        response.status(403);
+        throw new Error ("User doesn't have permission to update other user's contacts");
+    }
+
     //modifying contact:
     const modifiedContact = await Contact.findByIdAndUpdate(
         request.params.id, 
@@ -54,7 +61,14 @@ const deleteContact = asyncHandler(async (request, response) => {
         response.status(400);
         throw new Error ("Contact not found");
     }
-    await Contact.deleteOne();
+
+    if(contact.user_id.toString() != request.user.id){
+        //different user is trying to delete another user's conact
+        response.status(403);
+        throw new Error ("User doesn't have permission to update other user's contacts");
+    }
+
+    await Contact.deleteOne({_id: request.params.id});
     response.status(200).json(contact);
 });
 
