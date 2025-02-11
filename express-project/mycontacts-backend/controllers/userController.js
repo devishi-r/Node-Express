@@ -67,7 +67,7 @@ const loginUser = asyncHandler( async(request, response) => {
             } //payload
         }, 
         process.env.ACCESS_TOKEN_SECRET, 
-        { expiresIn: "1m" }); //jwt.sign() parameters: payload, secret, expiration time of token
+        { expiresIn: "15m" }); //jwt.sign() parameters: payload, secret, expiration time of token
         response.json( {accessToken});
         console.log("Access token: ", accessToken);
     }

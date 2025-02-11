@@ -4,15 +4,15 @@ const Contact = require("../models/contactModel");
 
 //@desc: Get all contacts
 //@route: GET /api/contacts
-//@access: public  //will be made private when adding authentication :)
+//@access: private  //will be made private when adding authentication :)
 const getContacts = asyncHandler(async (request, response) => {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find({ user_id: request.user.id});
     response.status(200).json(contacts);
 });
 
 //@desc: Create contact
 //@route: POST /api/contacts
-//@access: public
+//@access: private
 const createContact = asyncHandler(async (request, response) => {
     console.log("The request body is: ",request.body);
     const {name, email, phone} = request.body;
@@ -22,13 +22,13 @@ const createContact = asyncHandler(async (request, response) => {
     }
 
     //if all fields are present, create contact:
-    const contact = await Contact.create({name, email, phone});
+    const contact = await Contact.create({name, email, phone, user_id:request.user.id}); 
     response.status(201).json(contact);
 });
 
 //@desc: Modify contact
 //@route: PUT /api/contacts/:id
-//@access: public 
+//@access: private
 const modifyContact = asyncHandler(async (request, response) => {
     //first finding contact:
     const contact = await Contact.findById(request.params.id);
@@ -46,7 +46,7 @@ const modifyContact = asyncHandler(async (request, response) => {
 
 //@desc: Delete contact
 //@route: DELETE /api/contacts/:id
-//@access: public  
+//@access: private
 const deleteContact = asyncHandler(async (request, response) => { 
     //finding contact:
     const contact = await Contact.findById(request.params.id);
@@ -60,7 +60,7 @@ const deleteContact = asyncHandler(async (request, response) => {
 
 //@desc: Get contact
 //@route: GET /api/contacts/:id
-//@access: public  
+//@access: private
 const getContact = asyncHandler(async (request, response) => {
     const contact = await Contact.findById(request.params.id);
     //if no contact found: throw error:

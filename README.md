@@ -49,3 +49,9 @@ Client passes _access token_ to ensure only authenticated users may access priva
 - Can use generated access token to access all private routes 
 - Convert `contactController` routes to private, and enforce validation logic
 - Creating middleware to validate client token (accessToken is passed in bearer sectin on Postman)
+
+Commit 10: Querying Database  
+- Updated `contactModel` with owner user id
+- Converting `contactController` routes to private
+- using `validateToken` as middleware for all private routes
+- Implement `request.user.id` in contactController file to assign contacts to different users
